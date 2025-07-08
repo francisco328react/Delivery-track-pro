@@ -1,8 +1,14 @@
-import { Router } from "express";
-import { getAllDevliveries } from "../controllers/deliveryController";
+import { Router, Request, Response } from "express";
+import * as DeliveryController from "../controllers/deliveryController";
 
 const router = Router();
 
-router.get("/deliveries", getAllDevliveries);
+// Rota de listagem
+router.get("/deliveries", DeliveryController.getAllDeliveries);
+
+// Rota de criação
+router.post("/deliveries", (req: Request, res: Response) => {
+  DeliveryController.createDelivery(req, res);
+});
 
 export default router;

@@ -11,7 +11,7 @@ app.use(express.json());
 
 const port = process.env.PORT || 3333;
 
-app.use(deliveryRoutes);
+app.use("/api", deliveryRoutes);
 
 app.listen(port, () => {
     console.log(`Servidor rodando na port:${port}`);
