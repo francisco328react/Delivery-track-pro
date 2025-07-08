@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import deliveryRoutes from './routes/deliveryRoutes';
 
 dotenv.config();
 
@@ -10,9 +11,7 @@ app.use(express.json());
 
 const port = process.env.PORT || 3333;
 
-app.get('/', (req, res) => {
-    res.send("Delivery Track Pro API está rodando");
-})
+app.use(deliveryRoutes);
 
 app.listen(port, () => {
     console.log(`Servidor rodando na port:${port}`);
