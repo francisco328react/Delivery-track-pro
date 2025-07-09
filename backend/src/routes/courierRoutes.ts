@@ -1,10 +1,10 @@
 import { Router, Response, Request } from "express";
-import * as CourierController from "../controllers/courierController";
+import { createCourier, getAllCouriers } from "../controllers/courierController";
+import { esureAuth } from "../middlewares/ensureAuth";
 
 const router = Router();
 
-router.post("/couriers", (req: Request, res: Response) => {
-  CourierController.createCourier(req, res);
-});
+router.get("/couriers", esureAuth, getAllCouriers)
+router.post("/couriers", esureAuth, createCourier)
 
 export default router;
