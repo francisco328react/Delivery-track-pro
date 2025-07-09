@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../database/prisma";
+import { courierSchema, updateCourierSchema } from "../schemas/courierSchema";
 
 export const getAllCouriers = async (req: Request, res: Response) => {
   try {
@@ -14,12 +15,14 @@ export async function createCourier(
   req: Request,
   res: Response
 ): Promise<void> {
-  const { name, email, phone } = req.body;
+  const parseResult = courierSchema.safeParse(req.body);
 
-  if (!name || !email) {
-    res.status(400).json({ error: "Campos Obrigatórios: name e email" });
-    return;
+  if(!parseResult.success) {
+    res.status(400).json({ error: parseResult.error.format() });
+    return
   }
+
+  const { name, email, phone } = parseResult.data;
 
   try {
     const newCourier = await prisma.courier.create({
@@ -28,7 +31,9 @@ export async function createCourier(
 
     res.status(201).json(newCourier);
     return;
+
   } catch (error: any) {
+
     console.error(error);
 
     if (error.code === "P2002") {
@@ -45,13 +50,15 @@ export async function updateCourier(
   res: Response
 ): Promise<void> {
   const { id } = req.params;
-  const { name, email, phone, active } = req.body;
 
-  const data: any = [];
-  if (name !== undefined) data.name = name;
-  if (email !== undefined) data.email = email;
-  if (phone !== undefined) data.phone = phone;
-  if (active !== undefined) data.active = active;
+  const parseResult = updateCourierSchema.safeParse(req.body);
+
+  if(!parseResult.success) {
+    res.status(400).json({ error: parseResult.error.format() });
+    return
+  }
+
+  const data = parseResult.data;
 
   try {
     const updatedCourier = await prisma.courier.update({
@@ -60,8 +67,14 @@ export async function updateCourier(
     });
 
     res.status(200).json(updatedCourier);
-  } catch (error) {
-    console.error(error);
+    
+  } catch (error: any) {
+
+    if (error.code === "P2025") {
+      res.status(404).json({ error: "Entregador não encontrado" });
+      return;
+    }
+
     res.status(500).json({ error: "Erro ao atualizar entregador" });
   }
 }
