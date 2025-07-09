@@ -15,7 +15,10 @@ model Delivery {
 }
 
 model Courier {
-  id    String @id @default(uuid())
-  name  String
-  email String @unique
+  id     String   @id @default(uuid())
+  name   String
+  email  String   @unique
+  phone  String?
+  active Boolean  @default(true)
+  createdAt DateTime @default(now())
 }
