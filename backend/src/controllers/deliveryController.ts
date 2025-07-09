@@ -12,20 +12,22 @@ export const getAllDeliveries = async (req: Request, res: Response) => {
 };
 
 // Criar nova entrega
-export const createDelivery = async (req: Request, res: Response) => {
+export async function createDelivery(req: Request, res: Response): Promise<void> {
   const { recipient, status } = req.body;
 
   if (!recipient || !status) {
-    return res.status(400).json({ error: 'Campos obrigatórios: recipient e status' });
+    res.status(400).json({ error: 'Campos obrigatórios: recipient e status' });
+    return;
   }
 
   try {
     const newDelivery = await prisma.delivery.create({
       data: { recipient, status },
     });
+
     res.status(201).json(newDelivery);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erro ao criar entrega' });
   }
-};
+}

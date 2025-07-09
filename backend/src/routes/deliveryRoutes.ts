@@ -1,14 +1,13 @@
 import { Router, Request, Response } from "express";
-import * as DeliveryController from "../controllers/deliveryController";
+import { getAllDeliveries, createDelivery } from "../controllers/deliveryController";
+import { esureAuth } from "../middlewares/ensureAuth";
 
 const router = Router();
 
 // Rota de listagem
-router.get("/deliveries", DeliveryController.getAllDeliveries);
+router.get("/deliveries", getAllDeliveries);
 
 // Rota de criação
-router.post("/deliveries", (req: Request, res: Response) => {
-  DeliveryController.createDelivery(req, res);
-});
+router.post("/deliveries", esureAuth, createDelivery);
 
 export default router;
