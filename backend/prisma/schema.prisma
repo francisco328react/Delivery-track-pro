@@ -22,3 +22,11 @@ model Courier {
   active Boolean  @default(true)
   createdAt DateTime @default(now())
 }
+
+model User {
+  id       String   @id @default(uuid())
+  name     String
+  email    String   @unique
+  password String
+  createdAt DateTime @default(now())
+}
