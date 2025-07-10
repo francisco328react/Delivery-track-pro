@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { getAllDeliveries, createDelivery, updateDelivey, deleteDelivery } from "../controllers/deliveryController";
-import { esureAuth } from "../middlewares/ensureAuth";
+import { ensureAuth } from "../middlewares/ensureAuth";
 
 const router = Router();
 
-router.get("/deliveries", getAllDeliveries);
-router.post("/deliveries", esureAuth, createDelivery);
-router.put("/deliveries", esureAuth, updateDelivey);
-router.delete("/deliveries", esureAuth, deleteDelivery);
+router.get("/deliveries", ensureAuth, getAllDeliveries);
+router.post("/deliveries", ensureAuth, createDelivery);
+router.put("/deliveries", ensureAuth, updateDelivey);
+router.delete("/deliveries", ensureAuth, deleteDelivery);
 
 export default router;
