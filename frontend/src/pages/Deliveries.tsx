@@ -47,6 +47,7 @@ export function Deliveries() {
                             <th className="p-2 text-left">Destinatário</th>
                             <th className="p-2 text-left">Status</th>
                             <th className="p-2 text-left">Criado em</th>
+                            <th className="p-2 text-left">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,6 +57,14 @@ export function Deliveries() {
                                 <td className="p-2">{delivery.status}</td>
                                 <td className="p-2">
                                     {new Date(delivery.createdAt).toLocaleString("pt-BR")}
+                                </td>
+                                <td className="p-2">
+                                    <button
+                                        onClick={() => navigate(`/deliveries/edit/${delivery.id}`)}
+                                        className="text-blue-600 hover:underline"
+                                    >
+                                        Editar
+                                    </button>
                                 </td>
                             </tr>
                         ))}

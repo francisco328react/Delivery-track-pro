@@ -47,6 +47,7 @@ export function Couriers() {
                             <th className="p-2 text-2xl">Email</th>
                             <th className="p-2 text-left">Telefone</th>
                             <th className="p-2 text-left">Ativo</th>
+                            <th className="p-2 text-left">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,6 +68,14 @@ export function Couriers() {
                                     ) : (
                                         <span className="text-red-600 font-semibold">Não</span>
                                     )}
+                                </td>
+                                <td className="p-2">
+                                    <button
+                                        onClick={() => navigate(`/couriers/edit/${courier.id}`)}
+                                        className="text-green-600 hover:underline"
+                                    >
+                                        Editar
+                                    </button>
                                 </td>
                             </tr>
                         ))}

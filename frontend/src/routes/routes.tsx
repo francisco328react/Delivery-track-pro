@@ -6,6 +6,8 @@ import { Couriers } from "../pages/Couriers";
 import { PrivateRoute } from "./PrivateRoute";
 import { NewDelivery } from "../pages/NewDelivery";
 import { NewCourier } from "../pages/NewCourier";
+import { EditDelivery } from "../pages/EditDelivery";
+import { EditCourier } from "../pages/EditCourier";
 
 export const routes: RouteObject[] = [
   {
@@ -49,6 +51,22 @@ export const routes: RouteObject[] = [
     element: (
       <PrivateRoute>
         <NewCourier />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/couriers/new", 
+    element: (
+      <PrivateRoute>
+        <EditDelivery />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/couriers/new", 
+    element: (
+      <PrivateRoute>
+        <EditCourier />
       </PrivateRoute>
     ),
   },
