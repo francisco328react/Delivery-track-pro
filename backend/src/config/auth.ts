@@ -1,15 +1,15 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-const secret = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
-if (!secret) {
+if (!JWT_SECRET) {
   throw new Error("JWT_SECRET não definido no .env");
 }
 
-export default {
+export const authConfig = {
   jwt: {
-    secret: secret as string,
+    secret: JWT_SECRET,
     expiresIn: "1d" as const,
   },
 };

@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 import deliveryRoutes from './routes/deliveryRoutes';
 import courierRoutes from './routes/courierRoutes';
-import useRoutes from './routes/userRoutes';
+import userRoutes from './routes/userRoutes';
 
 dotenv.config();
 
@@ -14,9 +14,9 @@ app.use(express.json());
 
 const port = process.env.PORT || 3333;
 
-app.use("/api", deliveryRoutes);
-app.use("/api", courierRoutes);
-app.use("/api", useRoutes);
+app.use(deliveryRoutes);
+app.use(courierRoutes);
+app.use(userRoutes);
 
 app.listen(port, () => {
     console.log(`Servidor rodando na port:${port}`);
