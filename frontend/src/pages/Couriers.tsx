@@ -76,6 +76,24 @@ export function Couriers() {
                                     >
                                         Editar
                                     </button>
+                                    <button
+                                        onClick={async () => {
+                                        const confirmDelete = confirm("Tem certeza que deseja excluir este entregador?");
+                                        if (confirmDelete) {
+                                            try {
+                                            await api.delete(`/couriers/${courier.id}`);
+                                            alert("Entregador excluído com sucesso");
+                                            setCouriers((prev) => prev.filter((c) => c.id !== courier.id));
+                                            } catch (error) {
+                                            alert("Erro ao excluir entregador");
+                                            console.error(error);
+                                            }
+                                        }
+                                        }}
+                                        className="text-red-600 hover:underline"
+                                    >
+                                        Excluir
+                                    </button>
                                 </td>
                             </tr>
                         ))}

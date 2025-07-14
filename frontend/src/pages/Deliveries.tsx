@@ -65,6 +65,24 @@ export function Deliveries() {
                                     >
                                         Editar
                                     </button>
+                                    <button
+                                        onClick={async () => {
+                                        const confirmDelete = confirm("Tem certeza que deseja excluir esta entrega?");
+                                        if (confirmDelete) {
+                                            try {
+                                            await api.delete(`/deliveries/${delivery.id}`);
+                                            alert("Entrega excluída com sucesso");
+                                            setDeliveries((prev) => prev.filter((d) => d.id !== delivery.id));
+                                            } catch (error) {
+                                            alert("Erro ao excluir entrega");
+                                            console.error(error);
+                                            }
+                                        }
+                                        }}
+                                        className="text-red-600 hover:underline"
+                                    >
+                                        Excluir
+                                    </button>
                                 </td>
                             </tr>
                         ))}
