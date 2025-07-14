@@ -1,6 +1,7 @@
 import { api } from "../services/api";
 import { Layout } from "../components/Layout";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 interface Delivery {
     id: string;
@@ -12,6 +13,7 @@ interface Delivery {
 export function Deliveries() {
     const [deliveries, setDeliveries] = useState<Delivery[]>([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         api.get("/deliveries")
@@ -22,9 +24,18 @@ export function Deliveries() {
 
     return (
         <Layout>
-            <h1 className="text-2xl font-bold mb-4">
-                Lista de Entregas
-            </h1>
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-2xl font-bold mb-4">
+                    Lista de Entregas
+                </h1>
+                <button
+                    onClick={() => navigate("/deliveries/new")}
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+                >
+                    Nova Entrega
+                </button>
+            </div>
+
             {loading ? (
                 <p>Carregando...</p>
             ) : deliveries.length === 0 ? (

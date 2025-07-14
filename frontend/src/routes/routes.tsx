@@ -3,6 +3,9 @@ import { Login } from "../pages/Login";
 import { Dashboard } from "../pages/Dashboard";
 import { Deliveries } from "../pages/Deliveries";
 import { Couriers } from "../pages/Couriers";
+import { PrivateRoute } from "./PrivateRoute";
+import { NewDelivery } from "../pages/NewDelivery";
+import { NewCourier } from "../pages/NewCourier";
 
 export const routes: RouteObject[] = [
   {
@@ -11,15 +14,43 @@ export const routes: RouteObject[] = [
   },
   {
     path: "/dashboard", 
-    element: (<Dashboard />),
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/deliveries", 
-    element: (<Deliveries />),
+    element: (
+      <PrivateRoute>
+        <Deliveries />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/couriers", 
-    element: (<Couriers />),
+    element: (
+      <PrivateRoute>
+        <Couriers />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/deliveries/new", 
+    element: (
+      <PrivateRoute>
+        <NewDelivery />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/couriers/new", 
+    element: (
+      <PrivateRoute>
+        <NewCourier />
+      </PrivateRoute>
+    ),
   },
   {
     path: "*",

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
 import { api } from "../services/api";
+import { useNavigate } from "react-router";
 
 interface Courier {
     id: string;
@@ -13,6 +14,7 @@ interface Courier {
 export function Couriers() {
     const [couriers, setCouriers] = useState<Courier[]>([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         api.get("/couriers")
@@ -23,7 +25,16 @@ export function Couriers() {
 
     return (
         <Layout>
-            <h1 className="text-2xl font-bold mb-4">Lista de Entregadores</h1>
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-2xl font-bold mb-4">Lista de Entregadores</h1>
+                <button
+                    onClick={() => navigate("/couriers/new")}
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+                >
+                    Novo Entregador
+                </button>
+            </div>
+
             {loading ? (
                 <p>Carregando...</p>
             ) : couriers.length === 0 ? (
