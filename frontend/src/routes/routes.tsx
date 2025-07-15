@@ -55,7 +55,7 @@ export const routes: RouteObject[] = [
     ),
   },
   {
-    path: "/couriers/new", 
+    path: "/couriers/edit", 
     element: (
       <PrivateRoute>
         <EditDelivery />
@@ -63,7 +63,7 @@ export const routes: RouteObject[] = [
     ),
   },
   {
-    path: "/couriers/new", 
+    path: "/couriers/edit", 
     element: (
       <PrivateRoute>
         <EditCourier />

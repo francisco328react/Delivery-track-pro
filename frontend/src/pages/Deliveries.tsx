@@ -13,6 +13,7 @@ interface Delivery {
 export function Deliveries() {
     const [deliveries, setDeliveries] = useState<Delivery[]>([]);
     const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,6 +22,11 @@ export function Deliveries() {
         .catch((err) => console.error("Erro ao buscar entregas:", err))
         .finally(() => setLoading(false));
     }, [])
+
+    const filteredSearTerm = deliveries.filter((delivery) =>
+        delivery.recipient.toUpperCase().includes(searchTerm.toUpperCase()) || 
+        delivery.status.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <Layout>
@@ -35,6 +41,14 @@ export function Deliveries() {
                     Nova Entrega
                 </button>
             </div>
+
+            <input 
+                type="text"
+                placeholder="Filtrar"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="border px-3 py-2 rounded mb-4 w-full md:w-1/2"
+            />
 
             {loading ? (
                 <p>Carregando...</p>
@@ -51,7 +65,7 @@ export function Deliveries() {
                         </tr>
                     </thead>
                     <tbody>
-                        {deliveries.map((delivery) => (
+                        {filteredSearTerm.map((delivery) => (
                             <tr key={delivery.id} className="border-t">
                                 <td className="p-2">{delivery.recipient}</td>
                                 <td className="p-2">{delivery.status}</td>

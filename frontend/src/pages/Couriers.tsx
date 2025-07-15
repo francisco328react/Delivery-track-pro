@@ -14,6 +14,7 @@ interface Courier {
 export function Couriers() {
     const [couriers, setCouriers] = useState<Courier[]>([]);
     const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,6 +23,11 @@ export function Couriers() {
         .catch((err) => console.error(err))
         .finally(() => setLoading(false));
     }, [])
+
+    const filteredCouriers = couriers.filter((courier) => 
+        courier.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        courier.email.toUpperCase().includes(searchTerm.toUpperCase())
+    )
 
     return (
         <Layout>
@@ -34,6 +40,14 @@ export function Couriers() {
                     Novo Entregador
                 </button>
             </div>
+            
+            <input 
+                type="text"
+                placeholder="Buscar por nome ou email"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="border px-3 py-2 rounded mb-4 w-full md:w-1/2"
+            />
 
             {loading ? (
                 <p>Carregando...</p>
@@ -51,7 +65,7 @@ export function Couriers() {
                         </tr>
                     </thead>
                     <tbody>
-                        {couriers.map((courier) => (
+                        {filteredCouriers.map((courier) => (
                             <tr key={courier.id} className="border-t">
                                 <td className="p-2">
                                     {courier.name}
