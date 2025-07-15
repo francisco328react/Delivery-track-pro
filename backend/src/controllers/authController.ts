@@ -32,6 +32,8 @@ export async function login(req: Request, res: Response): Promise<void> {
       return;
     }
 
+    console.log("Usuário autenticado", user);
+
     const token = jwt.sign(
       { id: user.id, email: user.email },
       authConfig.jwt.secret as string,
