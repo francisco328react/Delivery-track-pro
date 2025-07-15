@@ -1,20 +1,20 @@
 import { Layout } from "../components/Layout";
 import { api } from "../services/api";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import type { CourierFormData } from "../schemas/courierSchema";
+import { courierSchema } from "../schemas/courierSchema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function NewCourier() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [active, setActive] = useState(true);
     const navigate = useNavigate();
 
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
+    const { register, handleSubmit, formState: {errors} } = useForm<CourierFormData>({resolver: zodResolver(courierSchema)});
+
+    async function onSubmit(data: CourierFormData) {
 
         try {
-            await api.post("/couriers", { name, email, phone, active });
+            await api.post("/couriers", data);
             alert("Entregador cadastrado com sucesso!");
             navigate("/couriers");
         } catch (error) {
@@ -26,46 +26,44 @@ export function NewCourier() {
     return (
         <Layout>
             <h1 className="text-2xl font-semibold mb-4">Novo Entregador</h1>
-            <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md">
                 <div>
-                    <label htmlFor="name" className="block mb-1">Nome</label>
+                    <label htmlFor="name">Nome</label>
                     <input 
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        {...register("name")}
                         className="w-full border px-3 py-2 rounded"
-                        required
+                    />
+                    {errors.name && (
+                        <p className="text-red-600">{errors.name.message}</p>
+                    )}
+                </div>
+                <div>
+                    <label htmlFor="email">Email</label>
+                    <input 
+                        {...register("email")}
+                        className="w-full border px-3 py-2 rounded"
+                    />
+                    {errors.email && (
+                        <p className="text-red-600">{errors.email.message}</p>
+                    )}
+                </div>
+                <div>
+                    <label htmlFor="phone">Telefone</label>
+                    <input
+                        {...register("phone")}
+                        className="w-full border px-3 py-2 rounded"
                     />
                 </div>
                 <div>
-                    <label htmlFor="email" className="block mb-1">Email</label>
-                    <input 
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full border px-3 py-2 rounded"
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="phone" className="block mb-1">Telefone</label>
-                    <input 
-                        type="tel"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        className="w-full border px-3 py-2 rounded"
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="active" className="block mb-1">Ativo</label>
-                    <input 
-                        type="checkbox"
-                        checked={active}
-                        onChange={(e) => setActive(e.target.checked)}
-                        className="mr-2"
-                    />
-                    <span>{active ? "Sim" : "Não"}</span>
+                    <label htmlFor="active">
+                        <input 
+                            type="checkbox"
+                            {...register("active")}
+                            defaultChecked
+                            className="mr-2"
+                        />
+                        Ativo
+                    </label>
                 </div>
                 <button
                     type="submit"

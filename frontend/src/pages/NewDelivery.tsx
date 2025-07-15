@@ -1,18 +1,19 @@
 import { Layout } from "../components/Layout";
-import { useState } from "react";
 import { useNavigate } from "react-router";
 import { api } from "../services/api";
+import { deliverySchema } from "../schemas/deliverySchema";
+import type { DeliveryFormData } from "../schemas/deliverySchema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function NewDelivery() {
-    const [recipient, setRecipient] = useState("");
-    const [status, setStatus] = useState("pendente");
+    const { register, handleSubmit, formState: {errors}} = useForm<DeliveryFormData>({resolver: zodResolver(deliverySchema)});
     const navigate = useNavigate();
 
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
+    async function onSubmit(data: DeliveryFormData) {
 
         try {
-            await api.post("/deliveries", { recipient, status});
+            await api.post("/deliveries", data);
             alert("Entrega cadastrada com sucesso!");
             navigate("/deliveries");
         } catch (error) {
@@ -24,28 +25,30 @@ export function NewDelivery() {
     return (
         <Layout>
             <h1 className="text-2xl font-semibold mb-4">Nova Entrega</h1>
-            <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md">
                 <div>
-                    <label className="block mb-1">Destinatário</label>
+                    <label>Destinatário</label>
                     <input 
-                        type="text"
-                        value={recipient}
-                        onChange={(e) => setRecipient(e.target.value)}
+                        {...register("recipient")}
                         className="w-full border px-3 py-2 rounded"
-                        required
                     />
+                    {errors.recipient && (
+                        <p className="text-red-600 text-sm">{errors.recipient.message}</p>
+                    )}
                 </div>
                 <div>
-                    <label className="block mb-1">Status</label>
+                    <label>Status</label>
                     <select 
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
+                        {...register("status")}
                         className="w-full border px-3 py-2 rounded"
                     >
-                        <option value="">Pendente</option>
-                        <option value="">Em trânsito</option>
-                        <option value="">Entregue</option>
+                        <option value="pendente">Pendente</option>
+                        <option value="em trânsito">Em trânsito</option>
+                        <option value="entregue">Entregue</option>
                     </select>
+                    {errors.status && (
+                        <p className="text-red-600 text-sm">{errors.status.message}</p>
+                    )}
                 </div>
                 <button
                     type="submit"
