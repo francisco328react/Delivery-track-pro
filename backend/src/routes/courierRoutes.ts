@@ -1,4 +1,4 @@
-import { Router, Response, Request } from "express";
+import { Router } from "express";
 import { createCourier, deleteCourier, getAllCouriers, updateCourier } from "../controllers/courierController";
 import { ensureAuth } from "../middlewares/ensureAuth";
 
