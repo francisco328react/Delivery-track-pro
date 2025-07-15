@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
 import { api } from "../services/api";
 import { useNavigate } from "react-router";
+import { Pencil, Trash2, User2, Mail, Phone } from "lucide-react";
 
 interface Courier {
     id: string;
@@ -68,12 +69,15 @@ export function Couriers() {
                         {filteredCouriers.map((courier) => (
                             <tr key={courier.id} className="border-t">
                                 <td className="p-2">
+                                    <User2 className="w-5 h-5 py-0.5 text-gray-500" />
                                     {courier.name}
                                 </td>
                                 <td className="p-2">
+                                    <Mail className="w-5 h-5 py-0.5 text-gray-500" />
                                     {courier.email}
                                 </td>
                                 <td className="p-2">
+                                    <Phone className="w-5 h-5 py-0.5 text-gray-500" />
                                     {courier.phone || "-"}
                                 </td>
                                 <td className="p-2">
@@ -88,7 +92,7 @@ export function Couriers() {
                                         onClick={() => navigate(`/couriers/edit/${courier.id}`)}
                                         className="text-green-600 hover:underline cursor-pointer"
                                     >
-                                        Editar
+                                        <Pencil className="w-6 h-6" />
                                     </button>
                                     <button
                                         onClick={async () => {
@@ -106,7 +110,7 @@ export function Couriers() {
                                         }}
                                         className="text-red-600 ml-2 hover:underline cursor-pointer"
                                     >
-                                        Excluir
+                                        <Trash2 className="w-6 h-6" />
                                     </button>
                                 </td>
                             </tr>

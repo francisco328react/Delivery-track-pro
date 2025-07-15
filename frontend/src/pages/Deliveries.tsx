@@ -2,6 +2,7 @@ import { api } from "../services/api";
 import { Layout } from "../components/Layout";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { Pencil, Trash2 } from "lucide-react";
 
 interface Delivery {
     id: string;
@@ -77,7 +78,7 @@ export function Deliveries() {
                                         onClick={() => navigate(`/deliveries/edit/${delivery.id}`)}
                                         className="text-blue-600 hover:underline cursor-pointer"
                                     >
-                                        Editar
+                                        <Pencil className="w-6 h-6" />
                                     </button>
                                     <button
                                         onClick={async () => {
@@ -95,7 +96,7 @@ export function Deliveries() {
                                         }}
                                         className="text-red-600 ml-2 hover:underline cursor-pointer"
                                     >
-                                        Excluir
+                                        <Trash2 className="2-6 h-6" />
                                     </button>
                                 </td>
                             </tr>
