@@ -44,7 +44,7 @@ export function Couriers() {
                     <thead className="bg-gray-100">
                         <tr>
                             <th className="p-2 text-left">Nome</th>
-                            <th className="p-2 text-2xl">Email</th>
+                            <th className="p-2 text-left">Email</th>
                             <th className="p-2 text-left">Telefone</th>
                             <th className="p-2 text-left">Ativo</th>
                             <th className="p-2 text-left">Ações</th>
@@ -62,7 +62,7 @@ export function Couriers() {
                                 <td className="p-2">
                                     {courier.phone || "-"}
                                 </td>
-                                <td>
+                                <td className="p-2">
                                     {courier.active ? (
                                         <span className="text-green-600 font-semibold">Sim</span>
                                     ) : (
@@ -72,7 +72,7 @@ export function Couriers() {
                                 <td className="p-2">
                                     <button
                                         onClick={() => navigate(`/couriers/edit/${courier.id}`)}
-                                        className="text-green-600 hover:underline"
+                                        className="text-green-600 hover:underline cursor-pointer"
                                     >
                                         Editar
                                     </button>
@@ -90,7 +90,7 @@ export function Couriers() {
                                             }
                                         }
                                         }}
-                                        className="text-red-600 hover:underline"
+                                        className="text-red-600 ml-2 hover:underline cursor-pointer"
                                     >
                                         Excluir
                                     </button>

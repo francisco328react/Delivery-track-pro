@@ -61,7 +61,7 @@ export function Deliveries() {
                                 <td className="p-2">
                                     <button
                                         onClick={() => navigate(`/deliveries/edit/${delivery.id}`)}
-                                        className="text-blue-600 hover:underline"
+                                        className="text-blue-600 hover:underline cursor-pointer"
                                     >
                                         Editar
                                     </button>
@@ -79,7 +79,7 @@ export function Deliveries() {
                                             }
                                         }
                                         }}
-                                        className="text-red-600 hover:underline"
+                                        className="text-red-600 ml-2 hover:underline cursor-pointer"
                                     >
                                         Excluir
                                     </button>
