@@ -17,6 +17,8 @@ export function EditDelivery() {
   const { id } = useParams();
 
   useEffect(() => {
+    if(!id) return;
+
     api
       .get(`/deliveries/${id}`)
       .then((res) => setForm(res.data))

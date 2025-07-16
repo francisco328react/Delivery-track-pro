@@ -75,7 +75,7 @@ export function Deliveries() {
                                 </td>
                                 <td className="p-2">
                                     <button
-                                        onClick={() => navigate(`/deliveries/edit/${delivery.id}`)}
+                                        onClick={() => navigate(`/couriers/edit/${delivery.id}`)}
                                         className="text-blue-600 hover:underline cursor-pointer"
                                     >
                                         <Pencil className="w-6 h-6" />

@@ -21,7 +21,11 @@ export function EditCourier() {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  console.log("ID -", id);
+
   useEffect(() => {
+    if(!id) return
+
     api.get(`/couriers/${id}`)
       .then((res) => setForm(res.data))
       .catch(() => alert("Erro ao carregar entregador"));

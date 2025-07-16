@@ -8,7 +8,7 @@ interface User {
   email: string;
 }
 interface AuthContextType {
-  token: string | null;
+  token: string;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
@@ -18,7 +18,7 @@ interface AuthContextType {
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useState<string | null>(() =>
+  const [token, setToken] = useState(() =>
     localStorage.getItem("token")
   );
 
