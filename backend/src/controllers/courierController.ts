@@ -93,3 +93,19 @@ export async function deleteCourier(req: Request, res: Response): Promise<void> 
     res.status(500).json({ error: "Erro ao deletar entregador" });
   }
 }
+
+export async function getCourierById(req: Request, res: Response): Promise<void> {
+  const { id } = req.params;
+
+  try {
+    const courier = await prisma.courier.findUnique({ where: { id } });
+
+    if (!courier) {
+      res.status(404).json({ error: "Entregador não encontrado" });
+    }
+
+    res.json(courier);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao carregar entregador" });
+  }
+}
